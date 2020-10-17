@@ -38,7 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'GetData.apps.GetdataConfig',
-    'rest_framework.apps.RestFrameworkConfig',
+    'rest_framework_app.apps.RestFrameworkAPPConfig',
+    # api system
+    'rest_framework',  # api
+    'rest_framework.authtoken',  # api
+    # 'rest_auth',  # api
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +57,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'MovieDjango.urls'
+
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework.authentication.TokenAuthentication',
+    'rest_framework.authentication.SessionAuthentication',
+),
+
+
+}
+
 
 TEMPLATES = [
     {
