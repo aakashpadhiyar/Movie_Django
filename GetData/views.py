@@ -3,11 +3,13 @@ from bs4 import BeautifulSoup as bs
 import requests
 from time import sleep
 import re
-
+from .models import  MoviesList
 # Create your views here.
 
 def fetch_data_from_tr(request):
-    movie_links_list = []
+    movie = MoviesList()
+    # movie_links_list = []
+
 
     for i in range(20):
         sleep(1)
@@ -28,23 +30,26 @@ def fetch_data_from_tr(request):
             # Title
             pre_Movie_title = beautify.find(class_="site-content").find('h1').get_text()
             Movie_title = re.sub('\s+', '', pre_Movie_title)
-            print(f'Title: {Movie_title}')
+            movie.Title = Movie_title
 
             # image
             pre_image_link = beautify.find(class_="movie-thumbnail-post-page").get('style')
             Image_link = re.split('[()]', pre_image_link)[1]
-            print(f'Image Link: {Image_link}')
+            # print(f'Image Link: {Image_link}')
+            movie.Image = Image_link
 
             # info
-            pre_movie_info = beautify.find(class_="movie-info").get_text()
-            print(pre_movie_info)
+            Movie_info = beautify.find(class_="movie-info").get_text()
+            # print(pre_movie_info)
+            movie.Description = Movie_info
 
             # Media
-            media = beautify.find_all(class_="movie-post-title")[2].find('a').get('href')
-            print(f'Media: {media}')
-            print('-\n\n\n-')
-
-            movie_links_list.append(movie_single_link)
+            Movie_media = beautify.find_all(class_="movie-post-title")[2].find('a').get('href')
+            print(f'Media: {Movie_media}')
+            movie.Video = Movie_media
+            # print('-\n\n\n-')
+            movie.save()
+            # movie_links_list.append(movie_single_link)
 
 
     return render(request, 'home.html')

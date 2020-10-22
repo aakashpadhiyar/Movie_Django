@@ -5,6 +5,7 @@ class MoviesList(models.Model):
     Title = models.CharField(max_length=100, blank=False)
     Video = models.URLField(max_length=200, blank=False)
     Description = models.TextField(blank=False)
+    Image = models.URLField(max_length=200, blank=False)
     Date = models.DateField(auto_now=True)
 
     def __str__(self):
